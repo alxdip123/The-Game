@@ -9,18 +9,20 @@ public class CreateCombatGrid : MonoBehaviour
     void Start()
     // Change this script so it creates cube gameobjects and attaches CombatTile.cs which contains the components for cube.
     {
-        GameObject[,] Tiles = new GameObject[3,6];
-        for (int z = 1; z < 3; z++)
+        GameObject[,] Tiles = new GameObject[4,7];
+        Renderer tileRender;
+        for (int z = 1; z < 4; z++)
         {
-            for (int x = 1; x < 6; x++)
+            for (int x = 1; x < 7; x++)
             {
-                Tiles[z,x] = new GameObject();
-                Tiles[z,x].AddComponent<CombatTile>();
-                CombatTile tile = Tiles[z,x].GetComponent<CombatTile>();
-                Vector3 temp = tile.transform.position;
-                temp.z = z;
-                temp.x = x; 
-                tile.transform.position = temp;
+                var testTexture = Resources.Load<Texture2D>("cobblestone");
+
+                GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                cube.transform.position = new Vector3(x, 0, z);
+
+                tileRender = cube.GetComponent<Renderer>();
+                tileRender.GetComponent<Renderer>().material.mainTexture = testTexture;
+                Tiles[z,x] = cube;
             }
         } 
     }
